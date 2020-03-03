@@ -1,7 +1,6 @@
 // import _ from 'lodash'
-import { TimelineMax, Bounce, Power3, Power1 } from 'gsap'
+import gsap from 'gsap'
 
-// import IMAGE_ATARU from '../images/ataru.png'
 import AUDIO_DRUM_REPEAT from '../audios/drum-repeat.mp3'
 import AUDIO_MIYAZAKI_REPEAT02 from '../audios/miyazaki-repeat02.mp3'
 import AUDIO_MIYAZAKI_REPEAT01 from '../audios/miyazaki-repeat.mp3'
@@ -129,7 +128,7 @@ const Roulette = () => {
 
   // アニメーション
   const START_ANIMATION = event => {
-    const TL = new TimelineMax()
+    const TL = gsap.timeline()
     if (first_flag === false) {
       first_flag = true
       TL.add('first')
@@ -139,7 +138,7 @@ const Roulette = () => {
           {
             y: '-90%',
             scale: 0.382,
-            ease: Power3.easeOut,
+            ease: 'power3.easeout',
           },
           'first'
         )
@@ -148,7 +147,7 @@ const Roulette = () => {
           DELAY / 1.618,
           {
             x: 0,
-            ease: Power1.easeOut,
+            ease: 'power1.easeout',
           },
           'first'
         )
@@ -157,14 +156,14 @@ const Roulette = () => {
           DELAY / 1.618,
           {
             x: 0,
-            ease: Power1.easeIn,
+            ease: 'power1.easein',
           },
           'first+=1'
         )
         .to($HEADER_LOGO, DELAY / 3.82, {
           textShadow:
             '0 0 2.5px #fff, 0 0 4px #fff, 0 0 10px #f3003d, 0 0 17.5px #f3003d, 0 0 20px #f3003d',
-          ease: Power1.easeIn,
+          ease: 'power1.easein',
         })
         .add('logo-in')
         .to(
@@ -172,7 +171,7 @@ const Roulette = () => {
           DELAY,
           {
             y: 0,
-            ease: Bounce.easeOut,
+            ease: 'bounce.easeout',
           },
           'logo-in+=1.5'
         )
@@ -189,7 +188,7 @@ const Roulette = () => {
           DELAY / 3.82,
           {
             scale: 0.08,
-            ease: Power1.easeOut,
+            ease: 'power1.easeout',
           },
           'roulette-in-=.5'
         )
@@ -218,17 +217,17 @@ const Roulette = () => {
           DELAY / 5,
           {
             y: '-100%',
-            ease: Power1.easeOut,
+            ease: 'power1.easeout',
           },
           'set-stage+=.2'
         )
     } else {
       TL.to($ROULETTE, DELAY / 5, {
         scale: 1,
-        ease: Power1.easeOut,
+        ease: 'power1.easeout',
       }).to($ATARU, DELAY / 3, {
         y: '-100%',
-        ease: Power1.easeOut,
+        ease: 'power1.easeout',
         onComplete: () => {
           $ATARU.classList.remove('-stop')
         },
@@ -238,13 +237,13 @@ const Roulette = () => {
 
   const STOP_ANIMATION = event => {
     $ATARU.classList.add('-stop')
-    const TL = new TimelineMax()
+    const TL = gsap.timeline()
     TL.to($ROULETTE, 0.1618, {
       scale: 1.1382,
-      ease: Power1.easeOut,
+      ease: 'power1.easeout',
     }).to($ATARU, DELAY / 1.618, {
       y: '-90%',
-      ease: Power1.easeOut,
+      ease: 'power1.easeout',
     })
   }
 
