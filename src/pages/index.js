@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-import SEO from '../components/Seo'
+import SEO from '../components/SEO'
 import Header from '../components/Header'
 import Ataru from '../components/Ataru'
 import Theme01 from '../components/Theme01'
