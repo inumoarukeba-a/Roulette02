@@ -1,0 +1,115 @@
+@charset "UTF-8";
+
+/* アニメーション
+   ========================================================================== */
+
+/* Keyframes
+−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−− */
+// ローディング
+@keyframes loading {
+    0% { transform: rotateZ(-360deg); }
+  100% { transform: rotateZ(0deg); }
+}
+
+// ふわふわ
+@keyframes floating {
+    0% { transform: translateY(1.5%); }
+  100% { transform: translateY(0%); }
+}
+
+
+/* Inview
+−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−− */
+// fade-in
+@mixin inview__fade-in() {
+  will-change: opacity;
+  transition-duration: .5s;
+  transition-property: opacity;
+  transition-timing-function: $easeInOutSine;
+  opacity: 0;
+  @at-root .-inviewed & {
+    opacity: 1;
+  }
+}
+
+// fade-in & up
+@mixin inview__fade-in-up() {
+  will-change: opacity, transform;
+  transition-duration: .5s;
+  transition-property: opacity, transform;
+  transition-timing-function: $easeInOutSine;
+  opacity: 0;
+  transform: translateY(10px);
+  @at-root .-inviewed & {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// fade-in & scale
+@mixin inview__fade-in-scale() {
+  will-change: opacity, transform;
+  transition-duration: .5s;
+  transition-property: opacity, transform;
+  transition-timing-function: $easeInOutSine;
+  opacity: 0;
+  transform: scale(1.0618);
+  @at-root .-inviewed & {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// fade-in & blur
+@mixin inview__fade-in-blur() {
+  will-change: opacity, filter;
+  transition-duration: .5s;
+  transition-property: opacity, filter;
+  transition-timing-function: $easeInOutSine;
+  opacity: 0;
+  filter: blur(3px);
+  @at-root .-inviewed & {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+// overflow-up
+@mixin inview__overflow-up() {
+  will-change: opacity, transform;
+  transition-duration: .5s;
+  transition-property: opacity, transform;
+  transition-timing-function: $easeInOutSine;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateY(100%);
+  @at-root .-inviewed & {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// scale-x
+@mixin inview__scale-x() {
+  will-change: transform;
+  transition-duration: .5s;
+  transition-property: transform;
+  transition-timing-function: $easeInOutSine;
+  transform: scaleX(0);
+  @at-root .-inviewed & {
+    transform: scaleX(1);
+  }
+}
+
+// color
+@mixin inview__color($color) {
+  will-change: color;
+  transition-duration: .5s;
+  transition-property: color;
+  transition-timing-function: $easeInOutSine;
+  color: 0;
+  color: $color-text;
+  @at-root .-inviewed & {
+    color: $color;
+  }
+}

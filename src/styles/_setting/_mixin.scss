@@ -1,0 +1,173 @@
+@charset "UTF-8";
+
+
+
+// line-heightによる余白の打ち消し
+// Mixin generated at: http://text-crop.eightshapes.com/
+// −−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−
+@mixin text-crop($line-height: $base-line-height, $top-adjustment: 0px, $bottom-adjustment: 0px) {
+    // Configured in Step 1
+    $top-crop: 9;
+    $bottom-crop: 8;
+    $crop-font-size: 36;
+    $crop-line-height: 1.2;
+
+    // Apply values to calculate em-based margins that work with any font size
+    $dynamic-top-crop: max(($top-crop + ($line-height - $crop-line-height) * ($crop-font-size / 2)), 0) / $crop-font-size;
+    $dynamic-bottom-crop: max(($bottom-crop + ($line-height - $crop-line-height) * ($crop-font-size / 2)), 0) / $crop-font-size;
+
+    // Mixin output
+    line-height: $line-height;
+
+    &::before,
+    &::after {
+        content: '';
+        display: block;
+        height: 0;
+        width: 0;
+    }
+
+    &::before {
+        margin-bottom: calc(-#{$dynamic-top-crop}em + #{$top-adjustment});
+    }
+
+    &::after {
+        margin-top: calc(-#{$dynamic-bottom-crop}em + #{$bottom-adjustment});
+    }
+}
+
+
+
+// フォントサイズ
+// −−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−
+@mixin fontsize($fontsize) {
+  font-size: $fontsize + px;
+  font-size: ($fontsize / 10) + rem;
+}
+
+
+
+// コンテンツ
+// −−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−
+@mixin contents-width {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: $contents-width;
+  padding-left: 40px;
+  padding-right: 40px;
+  @include mq-sp {
+    margin-left: 24px;
+    margin-right: 24px;
+    max-width: initial;
+    padding-left: initial;
+    padding-right: initial;
+  }
+}
+
+
+
+// VW
+// −−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−
+$spBreakPoint: 750px;
+@mixin vw($property, $size, $important: false) {
+  @if $important == 'important' or $important == true {
+    $important: ' !important';
+  } @else {
+    $important: '';
+  }
+  $px: "";
+  $prop: "";
+  $len: length($size);
+  @for $i from 1 through $len {
+    &#{nth($size, $i)} {
+      $px:#{$px} nth($size, $i);
+      $prop:#{$prop} vw(nth($size, $i));
+    }
+  }
+  #{$property}: $px#{$important};
+  #{$property}: $prop#{$important};
+};
+
+@function vw($pxValue) {
+  @return (($pxValue / $spBreakPoint) * 100)+vw;
+}
+
+
+
+
+// 疑似要素
+// −−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−
+@mixin pseudo() {
+  content: "";
+  display: block;
+}
+
+
+
+// Media Query
+// −−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−
+@mixin mq-pc {
+  @media screen and (min-width: $break-small + 1) {
+    @content;
+  }
+}
+
+@mixin mq-sp {
+  @media screen and (max-width: $break-small) {
+    @content;
+  }
+}
+
+@mixin mq-2x {
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+    @content;
+  }
+}
+
+
+
+// media quantity
+// −−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−
+@mixin at-least($count, $selector) {
+  #{$selector}:nth-last-child(n+#{$count}),
+  #{$selector}:nth-last-child(n+#{$count}) ~ #{$selector} {
+    @content;
+  }
+}
+
+@mixin at-most($count, $selector) {
+  #{$selector}:nth-last-child(-n+#{$count}):first-child,
+  #{$selector}:nth-last-child(-n+#{$count}):first-child ~ #{$selector} {
+    @content;
+  }
+}
+
+@mixin between($start, $end, $selector) {
+  #{$selector}:nth-last-child(n+#{$start}):nth-last-child(-n+#{$end}):first-child,
+  #{$selector}:nth-last-child(n+#{$start}):nth-last-child(-n+#{$end}):first-child ~ #{$selector} {
+    @content;
+  }
+}
+
+@mixin exactly($count, $selector) {
+  #{$selector}:nth-last-child(#{$count}):first-child,
+  #{$selector}:nth-last-child(#{$count}):first-child ~ #{$selector} {
+    @content;
+  }
+}
+
+
+
+/* Arrow
+−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−− */
+
+@mixin arrow--small($value: 4px, $color: $color-blue) {
+  @include pseudo();
+  width: $value;
+  height: $value;
+  border-width: 1px 1px 0 0;
+  border-style: solid;
+  border-color: $color;
+  transform: rotate(45deg);
+  margin-right: 8px;
+}

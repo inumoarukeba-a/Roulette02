@@ -1,0 +1,23 @@
+@charset "UTF-8";
+@import '_setting/_setting';
+
+/* ==========================================================================
+   01. Foundation
+   ========================================================================== */
+
+@import '_foundation/_reset';
+@import '_foundation/_baseset';
+@import '_foundation/_fontface';
+@import '_foundation/_responsive';
+
+/* ==========================================================================
+   05. Block
+   ========================================================================== */
+
+@import '_block/_wrapper';
+@import '_block/_main';
+@import '_block/_roulette';
+@import '_block/_background';
+@import '_block/_trigger';
+@import '_block/_header';
+@import '_block/_ataru';

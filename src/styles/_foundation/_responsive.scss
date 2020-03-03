@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+/* image
+   ========================================================================== */
+img {
+  height: auto;
+  line-height: 1.0;
+  max-width: 100%;
+  vertical-align: bottom;
+}
+
+
+/* display
+   ========================================================================== */
+
+.-sp-item {
+  display: none;
+}
+
+.-pc-block {
+  display: block;
+}
+
+@include mq-sp {
+
+  .-sp-item {
+    display: block;
+  }
+
+  .-pc-item {
+    display: none !important;
+  }
+
+  .-pc-block {
+    display: inline;
+  }
+
+  .-sp-block {
+    display: block;
+  }
+
+}
