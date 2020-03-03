@@ -1,8 +1,7 @@
 import React from 'react'
 import Helmet from 'react-helmet'
-console.log('aaa')
 
-export default props => {
+const SEO = props => {
   return (
     <Helmet>
       <meta charSet="utf-8" />
@@ -21,3 +20,5 @@ export default props => {
     </Helmet>
   )
 }
+
+export default SEO
