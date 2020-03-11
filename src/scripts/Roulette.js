@@ -3,8 +3,13 @@ import gsap from 'gsap'
 
 import AUDIO_DRUM_REPEAT from '../audios/drum-repeat.mp3'
 import AUDIO_DRUM_NED from '../audios/drum-end.mp3'
+import AUDIO_ENDING from '../audios/ending.mp3'
+import AUDIO_NOISE from '../audios/noise.mp3'
 
 const Roulette = () => {
+  /**
+   * Variables
+   */
   const $ROULETTE = document.getElementById('roulette')
   const $TRIGGER = document.getElementById('trigger')
   const $PLACEHOLDER = document.getElementById('placeholder')
@@ -21,6 +26,7 @@ const Roulette = () => {
     '今後やってみたいプログラムはありますか？',
   ]
   const DUMMY_LENGTH = DUMMY.length
+  const INSTANCE_ADUIO = new Audio()
 
   let $theme = document.getElementById('theme01')
   let interval = -1
@@ -29,87 +35,39 @@ const Roulette = () => {
   let roulette_length
   let random
   let $active_theme
-  let start_audio = new Audio()
-  let end_audio = new Audio()
-  let source
 
-  /* Triggers
-  ───────────────────────── */
-  $TRIGGER.addEventListener('click', event => {
-    ROULETTE()
-  })
-
-  window.addEventListener('keydown', event => {
-    const KEYCODE = event.keyCode
-    if (roulette_flag === false) {
-      // F7
-      if (KEYCODE === 118) {
-        $theme = document.getElementById('theme01')
-        $ROULETTE.classList.remove('-theme02', '-theme03')
-        $ROULETTE.classList.add('-theme01')
-      }
-      // F8
-      if (KEYCODE === 119) {
-        $theme = document.getElementById('theme02')
-        $ROULETTE.classList.remove('-theme01', '-theme03')
-        $ROULETTE.classList.add('-theme02')
-      }
-      // F9
-      if (KEYCODE === 120) {
-        $theme = document.getElementById('theme03')
-        $ROULETTE.classList.remove('-theme01', '-theme02')
-        $ROULETTE.classList.add('-theme03')
-      }
-    }
-    // Space
-    if (KEYCODE === 32) {
-      ROULETTE()
-    }
-  })
-
-  /* Functions
-  ───────────────────────── */
-  const ROULETTE = event => {
+  /**
+   * Roulette
+   */
+  const buttonEventSwither = event => {
     $PLACEHOLDER.classList.remove('-active')
     if (roulette_flag === false) {
-      START_AUDIO()
-      START_ANIMATION()
-      START_ROULETTE()
-      START_BUTTON()
+      playAudio({ source: AUDIO_DRUM_REPEAT, loop: true })
+      startAnimation()
+      startRoulette()
+      startButton()
     } else {
-      STOP_AUDIO()
-      STOP_ANIMATION()
-      STOP_ROULETTE()
-      STOP_BUTTON()
+      playAudio({ source: AUDIO_DRUM_NED, loop: false })
+      stopAnimation()
+      stopRoulette()
+      stopButton()
     }
   }
 
-  // オーディオ
-  const START_AUDIO = event => {
-    // オーディオストップ
-    end_audio.pause()
-    end_audio.currentTime = 0
-    // ランダム & 確率判定
-    source = AUDIO_DRUM_REPEAT
-    // 再生
-    start_audio.src = source
-    start_audio.loop = true
-    start_audio.play()
+  /**
+   * Audio
+   */
+  const playAudio = ({ source = null, loop = false }) => {
+    INSTANCE_ADUIO.currentTime = 0
+    INSTANCE_ADUIO.src = source
+    INSTANCE_ADUIO.loop = loop
+    INSTANCE_ADUIO.play()
   }
 
-  const STOP_AUDIO = event => {
-    // オーディオストップ
-    start_audio.pause()
-    start_audio.currentTime = 0
-    // ランダム & 確率判定
-    source = AUDIO_DRUM_NED
-    // 再生
-    end_audio.src = source
-    end_audio.play()
-  }
-
-  // アニメーション
-  const START_ANIMATION = event => {
+  /**
+   * Animation
+   */
+  const startAnimation = event => {
     const TL = gsap.timeline()
     if (first_flag === false) {
       first_flag = true
@@ -216,8 +174,7 @@ const Roulette = () => {
       })
     }
   }
-
-  const STOP_ANIMATION = event => {
+  const stopAnimation = event => {
     $ATARU.classList.add('-stop')
     const TL = gsap.timeline()
     TL.to($ROULETTE, 0.1618, {
@@ -229,8 +186,10 @@ const Roulette = () => {
     })
   }
 
-  // ルーレット
-  const START_ROULETTE = event => {
+  /**
+   * Roulette
+   */
+  const startRoulette = event => {
     // 前のテーマを削除
     if ($active_theme !== undefined) {
       $active_theme.remove()
@@ -259,8 +218,7 @@ const Roulette = () => {
       $active_theme.classList.add('-active')
     }, 80)
   }
-
-  const STOP_ROULETTE = event => {
+  const stopRoulette = event => {
     // インターバルをクリア
     clearTimeout(interval)
     // フラグを設定
@@ -278,16 +236,68 @@ const Roulette = () => {
     $active_theme.classList.add('-active')
   }
 
-  // ボタン
-  const START_BUTTON = event => {
+  /**
+   * Button
+   */
+  const startButton = event => {
     $TRIGGER.innerHTML = '決　定'
     $TRIGGER.classList.add('-stop')
   }
-
-  const STOP_BUTTON = event => {
+  const stopButton = event => {
     $TRIGGER.classList.remove('-stop')
     $TRIGGER.innerHTML = '開　始'
   }
+
+  /**
+   * Triggers
+   */
+  $TRIGGER.addEventListener('click', event => {
+    buttonEventSwither()
+  })
+
+  window.addEventListener('keydown', event => {
+    const KEYCODE = event.keyCode
+    if (roulette_flag === false) {
+      switch (KEYCODE) {
+        // F7
+        case 118:
+          $theme = document.getElementById('theme01')
+          $ROULETTE.classList.remove('-theme02', '-theme03')
+          $ROULETTE.classList.add('-theme01')
+          break
+        // F8
+        case 119:
+          $theme = document.getElementById('theme02')
+          $ROULETTE.classList.remove('-theme01', '-theme03')
+          $ROULETTE.classList.add('-theme02')
+          break
+        // F9
+        case 120:
+          $theme = document.getElementById('theme03')
+          $ROULETTE.classList.remove('-theme01', '-theme02')
+          $ROULETTE.classList.add('-theme03')
+          break
+        default:
+          break
+      }
+    }
+    switch (KEYCODE) {
+      // Space
+      case 32:
+        buttonEventSwither()
+        break
+      // F1
+      case 112:
+        playAudio({ source: AUDIO_ENDING, loop: true })
+        break
+      // F2
+      case 113:
+        playAudio({ source: AUDIO_NOISE, loop: true })
+        break
+      default:
+        break
+    }
+  })
 }
 
 export default Roulette
