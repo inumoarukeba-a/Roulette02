@@ -7,6 +7,7 @@ import Theme01 from '../components/Theme01'
 import Theme02 from '../components/Theme02'
 import Theme03 from '../components/Theme03'
 import Background from '../components/Background'
+import Ending from '../components/Ending'
 
 import Roulette from '../scripts/Roulette'
 
@@ -39,6 +40,7 @@ const IndexPage = () => {
           <button id="trigger">開　始</button>
         </main>
         <Background />
+        <Ending />
       </div>
     </>
   )

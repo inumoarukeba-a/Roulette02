@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+/* ataru
+   ========================================================================== */
+.ending {
+  width: 100vw;
+  min-height: 100vh;
+  position: absolute;
+  left: 0;
+  top: 0;
+  backdrop-filter: blur(5px) sepia(90%);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 3.4s ease 0s;
+  &.-active {
+    opacity: 1;
+  }
+}

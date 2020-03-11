@@ -9,7 +9,6 @@ const Stage = styled.aside`
   left: 0;
   top: 0;
   z-index: 0;
-  border: 1px solid black;
   background: url(${Ganko}) no-repeat center center;
   background-size: cover;
 `
