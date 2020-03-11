@@ -12,6 +12,7 @@ import Roulette from '../scripts/Roulette'
 
 const IndexPage = () => {
   useEffect(() => {
+    // ルーレット
     new Roulette()
   }, [])
 
@@ -24,7 +25,6 @@ const IndexPage = () => {
           <Ataru />
           <section id="roulette" className="roulette">
             <div className="roulette__wrapper">
-              <h2 className="roulette__heading">トークテーマ</h2>
               <div className="roulette__theme">
                 <p id="placeholder" className="roulette__placeholder -active">
                   ここにトークテーマが表示されます。
@@ -36,7 +36,7 @@ const IndexPage = () => {
               <aside className="roulette__shadow"></aside>
             </div>
           </section>
-          <button id="trigger">START</button>
+          <button id="trigger">開　始</button>
         </main>
         <Background />
       </div>

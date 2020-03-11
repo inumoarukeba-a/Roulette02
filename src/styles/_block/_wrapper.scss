@@ -3,33 +3,26 @@
 /* wrapper
    ========================================================================== */
 
-html, body, .wrapper {
+html,
+body,
+.wrapper {
   min-height: 100vh;
   overflow: hidden;
 }
 
 body {
-  background: linear-gradient(
-              253deg,
-              adjust-hue(lighten($color-red, 3.82), 15deg),
-              lighten($color-red, 6.18),
-              adjust-hue(lighten($color-red, 3.82), -20deg)
-            );
-  background-size: 100% 100%;
   position: relative;
-  font-family: $font-m;
   color: #1a1a1a;
-  // animation: Background 5s ease infinite;
 }
 @keyframes Background {
   0% {
-    background-position: 0% 50%
+    background-position: 0% 50%;
   }
   50% {
-    background-position: 100% 50%
+    background-position: 100% 50%;
   }
   100% {
-    background-position: 0% 50%
+    background-position: 0% 50%;
   }
 }
 

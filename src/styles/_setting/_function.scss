@@ -1,7 +1,5 @@
 @charset "UTF-8";
 
-
-
 // z-index
 // −−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−
 @function z($options...) {
@@ -12,19 +10,17 @@
   $temp-map: $z-map;
   $get-key: nth($options, $option-length);
 
-  @if($option-length > 1) {
+  @if ($option-length > 1) {
     @each $option in $options {
-      @if($option != $get-key) {
+      @if ($option != $get-key) {
         $temp-map: map-get($temp-map, $option);
       }
     }
   }
 
-  @if(not $z-map-reverse) {
-
+  @if (not $z-map-reverse) {
     $get-value: map-get($temp-map, $get-key);
     $is-index: index($temp-map, ($get-key $get-value));
-
   } @else {
     $counter: 1;
     @if ($z-map-reverse) {

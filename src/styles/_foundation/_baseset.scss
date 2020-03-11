@@ -6,8 +6,10 @@ html {
 }
 
 body {
-  font-family: $font-sans-serif;
-  font-size: percentage( $pc-font-size * 0.1);
+  font-family: a-otf-midashi-mi-ma31-pr6n, serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: percentage($pc-font-size * 0.1);
   line-height: $base-line-height;
   letter-spacing: $base-letter-spacing;
   -webkit-text-size-adjust: 100%;
@@ -19,14 +21,13 @@ body {
     -moz-osx-font-smoothing: grayscale;
   }
   @include mq-sp {
-    font-size: percentage( $sp-font-size * 0.1);
+    font-size: percentage($sp-font-size * 0.1);
   }
 }
 
 * {
   box-sizing: border-box;
 }
-
 
 /* link
    ========================================================================== */
@@ -46,12 +47,11 @@ a:hover {
   text-decoration: none;
 }
 
-
 /* image
    ========================================================================== */
 
 img {
-  line-height: 1.0;
+  line-height: 1;
   vertical-align: bottom;
 }
 
@@ -59,7 +59,6 @@ table th img,
 table td img {
   vertical-align: middle;
 }
-
 
 /* form label
    ========================================================================== */
@@ -80,11 +79,16 @@ button {
   appearance: none;
 }
 
-
 /* text
    ========================================================================== */
 
-header, h1, h2, h3, h4, h5, h6,
-strong, em {
-  font-weight: normal;
+header,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+strong,
+em {
 }

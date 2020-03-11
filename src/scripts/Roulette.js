@@ -2,33 +2,23 @@
 import gsap from 'gsap'
 
 import AUDIO_DRUM_REPEAT from '../audios/drum-repeat.mp3'
-import AUDIO_MIYAZAKI_REPEAT02 from '../audios/miyazaki-repeat02.mp3'
-import AUDIO_MIYAZAKI_REPEAT01 from '../audios/miyazaki-repeat.mp3'
-import AUDIO_ASHIDA_REPEAT02 from '../audios/ashida-repeat02.mp3'
-import AUDIO_ASHIDA_REPEAT01 from '../audios/ashida-repeat.mp3'
 import AUDIO_DRUM_NED from '../audios/drum-end.mp3'
-import AUDIO_MIYAZAKI_END from '../audios/miyazaki-end.mp3'
-import AUDIO_ASHIDA_END from '../audios/ashida-end.mp3'
 
 const Roulette = () => {
   const $ROULETTE = document.getElementById('roulette')
   const $TRIGGER = document.getElementById('trigger')
   const $PLACEHOLDER = document.getElementById('placeholder')
-  // const $DRUM_REPEAT = document.getElementById('drum-repeat')
-  // const $DRUM_END = document.getElementById('drum-end')
   const $HEADER_TITLE = document.getElementById('header__title')
   const $HEADER_LOGO = document.getElementById('header__logo')
   const $ATARU = document.getElementById('ataru')
   const $ATARU_WRAPPER = document.getElementById('ataru__wrapper')
   const DELAY = 1.618
   const DUMMY = [
-    '家庭ではどんなディレクターでしょうか？',
     '今だから話せる失敗談を教えてください。',
-    '画面構成を作るとき、どんなポイントを意識されていますか？',
-    'わかりやすい文章やメールのコツとかありますか',
-    'ディレクターになって、最初に当たった壁はなんでしたか？',
+    'プログラムを作るとき、どんなポイントを意識されていますか？',
+    '最初に当たった壁はなんでしたか？',
     '通勤時間って何をしていますか？',
-    '今後やってみたい案件・プロジェクトはありますか？',
+    '今後やってみたいプログラムはありますか？',
   ]
   const DUMMY_LENGTH = DUMMY.length
 
@@ -41,7 +31,6 @@ const Roulette = () => {
   let $active_theme
   let start_audio = new Audio()
   let end_audio = new Audio()
-  let num
   let source
 
   /* Triggers
@@ -101,12 +90,7 @@ const Roulette = () => {
     end_audio.pause()
     end_audio.currentTime = 0
     // ランダム & 確率判定
-    num = Math.floor(Math.random() * 100)
     source = AUDIO_DRUM_REPEAT
-    if (num <= 24) source = AUDIO_MIYAZAKI_REPEAT02
-    if (num <= 18) source = AUDIO_MIYAZAKI_REPEAT01
-    if (num <= 12) source = AUDIO_ASHIDA_REPEAT02
-    if (num <= 6) source = AUDIO_ASHIDA_REPEAT01
     // 再生
     start_audio.src = source
     start_audio.loop = true
@@ -119,8 +103,6 @@ const Roulette = () => {
     start_audio.currentTime = 0
     // ランダム & 確率判定
     source = AUDIO_DRUM_NED
-    if (num <= 24) source = AUDIO_MIYAZAKI_END
-    if (num <= 12) source = AUDIO_ASHIDA_END
     // 再生
     end_audio.src = source
     end_audio.play()
@@ -298,13 +280,13 @@ const Roulette = () => {
 
   // ボタン
   const START_BUTTON = event => {
-    $TRIGGER.innerHTML = 'STOP'
+    $TRIGGER.innerHTML = '決　定'
     $TRIGGER.classList.add('-stop')
   }
 
   const STOP_BUTTON = event => {
     $TRIGGER.classList.remove('-stop')
-    $TRIGGER.innerHTML = 'START'
+    $TRIGGER.innerHTML = '開　始'
   }
 }
 

@@ -4,11 +4,10 @@
    ========================================================================== */
 img {
   height: auto;
-  line-height: 1.0;
+  line-height: 1;
   max-width: 100%;
   vertical-align: bottom;
 }
-
 
 /* display
    ========================================================================== */
@@ -22,7 +21,6 @@ img {
 }
 
 @include mq-sp {
-
   .-sp-item {
     display: block;
   }
@@ -38,5 +36,4 @@ img {
   .-sp-block {
     display: block;
   }
-
 }
