@@ -1,22 +1,42 @@
 @charset "UTF-8";
 
-/* ataru
-   ========================================================================== */
 .ending {
   width: 100vw;
   min-height: 100vh;
   position: absolute;
   left: 0;
   top: 0;
-  backdrop-filter: blur(5px) sepia(90%);
-  z-index: 999;
+  backdrop-filter: blur(3px) sepia(90%);
+  z-index: z(ending);
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 3.4s ease 0s;
-  &.-active {
-    opacity: 1;
-  }
+}
+
+.ending__wrapper {
+  position: relative;
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.ending__image {
+  filter: sepia(1);
+  box-shadow: 0 40px 64px rgba(#1a1a1a, 0.382);
+}
+
+.ending__message {
+  color: #fff;
+  position: absolute;
+  right: 150px;
+  top: 220px;
+  font-size: 30px;
+  line-height: 1.8;
+  letter-spacing: 0.05em;
+}
+.ending__text {
+  opacity: 0;
+  transform: translateY(8px);
+  text-shadow: 0 0 2px rgba(#1a1a1a, 0.618);
 }

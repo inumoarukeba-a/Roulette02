@@ -5,11 +5,14 @@
 
 // z-index
 $z-map: (
-  global-header: (
-    logo: true,
+  ending: true,
+  opening: true,
+  main: (
+    shadow: true,
+    roulette: true,
+    trigger: true,
+    backIn: true,
   ),
-  main: true,
-  global-footer: true,
 );
 $z-map-reverse: true;
 

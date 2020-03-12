@@ -10,13 +10,10 @@ const Roulette = () => {
   /**
    * Variables
    */
-  const $ROULETTE = document.querySelector('#roulette')
-  const $TRIGGER = document.querySelector('#trigger')
-  const $PLACEHOLDER = document.querySelector('#placeholder')
-  const $HEADER_TITLE = document.querySelector('#header__title')
-  const $HEADER_LOGO = document.querySelector('#header__logo')
-  const $ATARU = document.querySelector('#ataru')
-  const $ATARU_WRAPPER = document.querySelector('#ataru__wrapper')
+  const $ROULETTE = document.querySelector('.roulette')
+  const $ROULETTE_TRIGGER = document.querySelector('.roulette__trigger')
+  const $PLACEHOLDER = document.querySelector('.roulette__placeholder')
+  const $OPENING_LOGOTYPE = document.querySelector('.opening__logotype')
   const $ENDING = document.querySelector('.ending')
   const DELAY = 1.618
   const DUMMY = [
@@ -27,28 +24,41 @@ const Roulette = () => {
     '今後やってみたいプログラムはありますか？',
   ]
   const DUMMY_LENGTH = DUMMY.length
-  const INSTANCE_ADUIO = new Audio()
+  const RESPONSE_AUDIO = new Audio()
+  const BGM_AUDIO = new Audio()
 
-  let $theme = document.getElementById('theme01')
+  let $theme = document.querySelector('#theme01')
   let interval = -1
-  let first_flag = false
   let roulette_flag = false
+  let first_flag = false
   let roulette_length
   let random
   let $active_theme
 
   /**
-   * Roulette
+   * Event Group
    */
-  const buttonEventSwither = event => {
+  const buttonEventSwither = () => {
     $PLACEHOLDER.classList.remove('-active')
     if (roulette_flag === false) {
-      playAudio({ source: AUDIO_DRUM_REPEAT, loop: true, volume: 1 })
+      playAudio({
+        instance: RESPONSE_AUDIO,
+        source: AUDIO_DRUM_REPEAT,
+        loop: true,
+        volume: 1,
+        fadeIn: false,
+      })
       startAnimation()
       startRoulette()
       startButton()
     } else {
-      playAudio({ source: AUDIO_DRUM_NED, loop: false, volume: 1 })
+      playAudio({
+        instance: RESPONSE_AUDIO,
+        source: AUDIO_DRUM_NED,
+        loop: false,
+        volume: 1,
+        fadeIn: false,
+      })
       stopAnimation()
       stopRoulette()
       stopButton()
@@ -58,134 +68,173 @@ const Roulette = () => {
   /**
    * Audio
    */
-  const playAudio = ({ source = null, loop = false, volume = 1 } = {}) => {
-    INSTANCE_ADUIO.currentTime = 0
-    INSTANCE_ADUIO.src = source
-    INSTANCE_ADUIO.volume = volume
-    INSTANCE_ADUIO.loop = loop
-    INSTANCE_ADUIO.play()
+  const playAudio = ({
+    instance = null,
+    source = null,
+    loop = false,
+    volume = 1,
+    fadeIn = false,
+    fadeInSpeed = 1300,
+  } = {}) => {
+    instance.currentTime = 0
+    instance.src = source
+    instance.loop = loop
+    instance.play()
+    if (!fadeIn) {
+      instance.volume = volume
+    } else {
+      instance.volume = 0
+      const volumeFadeIn = setInterval(function() {
+        instance.volume = instance.volume + volume / 100
+        if (instance.volume >= volume - volume / 100) {
+          instance.volume = volume
+          clearInterval(volumeFadeIn)
+        }
+      }, (fadeInSpeed * volume) / 100)
+    }
   }
 
   /**
    * Animation
    */
+  const openingAnimation = () => {
+    setTimeout(() => {
+      playAudio({
+        instance: BGM_AUDIO,
+        source: AUDIO_NOISE,
+        loop: true,
+        volume: 0.1618,
+        fadeIn: true,
+        fadeInSpeed: 34000,
+      })
+    }, 1300)
+    const TIMELINE = gsap.timeline()
+    TIMELINE.add('first')
+      .to($OPENING_LOGOTYPE, {
+        duration: 5.5,
+        rotationY: 180 * 7,
+        ease: 'back.out(1.1618)',
+      })
+      .to('.opening__message--image', {
+        duration: 0.8,
+        opacity: 1,
+        ease: 'power1.out',
+      })
+      .add('shout')
+      .to(
+        '.opening__shout--image',
+        {
+          duration: 1.3,
+          scale: 1,
+          stagger: 0.1,
+          ease: 'bounce.out',
+        },
+        'shout+=.3'
+      )
+      .to(
+        '.opening__shout--image',
+        {
+          duration: 1.3,
+          opacity: 1,
+          stagger: 0.1,
+          ease: 'power1.out',
+        },
+        'shout+=.3'
+      )
+      .add('roulette')
+      .to(
+        '.opening',
+        {
+          duration: 0.5,
+          y: '-100%',
+          ease: 'power1.out',
+        },
+        'roulette+=1.3'
+      )
+      .to(
+        '.roulette__blackIn',
+        {
+          duration: 3.4,
+          autoAlpha: 0,
+          ease: 'power1.out',
+        },
+        '-=.5'
+      )
+  }
+
   const startAnimation = () => {
-    const TL = gsap.timeline()
+    const TIMELINE = gsap.timeline()
     if (first_flag === false) {
       first_flag = true
-      TL.add('first')
-        .to(
-          $HEADER_TITLE,
-          DELAY / 3,
-          {
-            y: '-90%',
-            scale: 0.382,
-            ease: 'power3.easeout',
-          },
-          'first'
-        )
-        .to(
-          $ATARU,
-          DELAY / 1.618,
-          {
-            x: 0,
-            ease: 'power1.easeout',
-          },
-          'first'
-        )
-        .to(
-          $HEADER_LOGO,
-          DELAY / 1.618,
-          {
-            x: 0,
-            ease: 'power1.easein',
-          },
-          'first+=1'
-        )
-        .to($HEADER_LOGO, DELAY / 3.82, {
-          textShadow:
-            '0 0 2.5px #fff, 0 0 4px #fff, 0 0 10px #f3003d, 0 0 17.5px #f3003d, 0 0 20px #f3003d',
-          ease: 'power1.easein',
-        })
-        .add('logo-in')
-        .to(
-          $ROULETTE,
-          DELAY,
-          {
-            y: 0,
-            ease: 'bounce.easeout',
-          },
-          'logo-in+=1.5'
-        )
-        .add('roulette-in')
-        .set(
-          $HEADER_LOGO,
-          {
-            autoAlpha: 0,
-          },
-          'roulette-in'
-        )
-        .to(
-          $ATARU_WRAPPER,
-          DELAY / 3.82,
-          {
-            scale: 0.08,
-            ease: 'power1.easeout',
-          },
-          'roulette-in-=.5'
-        )
-        .add('scale-out')
-        .set(
-          $ATARU,
-          {
-            position: 'absolute',
-            y: '-90%',
-            width: '100%',
-          },
-          'scale-out+=.1'
-        )
-        .set(
-          $ATARU_WRAPPER,
-          {
-            height: 2000,
-            width: '100%',
-            transformOrigin: 'center bottom',
-          },
-          'scale-out+=.1'
-        )
-        .add('set-stage')
-        .to(
-          $ATARU,
-          DELAY / 5,
-          {
-            y: '-100%',
-            ease: 'power1.easeout',
-          },
-          'set-stage+=.2'
-        )
+      TIMELINE.to(
+        '.roulette',
+        {
+          duration: 1.3,
+          y: 0,
+          ease: 'bounce.out',
+        },
+        '+=.8'
+      )
     } else {
-      TL.to($ROULETTE, DELAY / 5, {
+      TIMELINE.to($ROULETTE, DELAY / 5, {
         scale: 1,
         ease: 'power1.easeout',
-      }).to($ATARU, DELAY / 3, {
-        y: '-100%',
-        ease: 'power1.easeout',
-        onComplete: () => {
-          $ATARU.classList.remove('-stop')
-        },
       })
     }
   }
   const stopAnimation = () => {
-    $ATARU.classList.add('-stop')
-    const TL = gsap.timeline()
-    TL.to($ROULETTE, 0.1618, {
+    const TIMELINE = gsap.timeline()
+    TIMELINE.to($ROULETTE, 0.1618, {
       scale: 1.1382,
       ease: 'power1.easeout',
-    }).to($ATARU, DELAY / 1.618, {
-      y: '-90%',
-      ease: 'power1.easeout',
     })
+  }
+
+  const endingAnimation = () => {
+    setTimeout(() => {
+      RESPONSE_AUDIO.pause()
+      playAudio({
+        instance: BGM_AUDIO,
+        source: AUDIO_ENDING,
+        loop: true,
+        volume: 1,
+        fadeIn: true,
+        fadeInSpeed: 3400,
+      })
+    }, 1300)
+    const TIMELINE = gsap.timeline()
+    TIMELINE.add('first')
+      .to($ENDING, {
+        duration: 3.4,
+        opacity: 1,
+        ease: 'power1.easeout',
+      })
+      .to($ROULETTE, {
+        duration: 0.8,
+        opacity: 0,
+        ease: 'power1.easeout',
+      })
+      .to(
+        '.ending__wrapper',
+        {
+          duration: 3.4,
+          opacity: 1,
+          y: 0,
+          ease: 'power1.easeout',
+        },
+        '+=3.4'
+      )
+      .to(
+        '.ending__text',
+        {
+          duration: 2.1,
+          opacity: 1,
+          y: 0,
+          stagger: 1.7,
+          ease: 'power1.easeout',
+        },
+        '+=.8'
+      )
   }
 
   /**
@@ -226,7 +275,7 @@ const Roulette = () => {
     // フラグを設定
     roulette_flag = false
     // ダミーを削除
-    let $DUMMY_ELEMENTS = document.getElementsByClassName('-dummy')
+    let $DUMMY_ELEMENTS = document.querySelectorAll('.-dummy')
     for (let i = 0; i < DUMMY_LENGTH; i++) {
       $DUMMY_ELEMENTS[0].remove()
     }
@@ -242,20 +291,29 @@ const Roulette = () => {
    * Button
    */
   const startButton = () => {
-    $TRIGGER.innerHTML = '決　定'
-    $TRIGGER.classList.add('-stop')
+    $ROULETTE_TRIGGER.innerHTML = '決　定'
+    $ROULETTE_TRIGGER.classList.add('-stop')
   }
   const stopButton = () => {
-    $TRIGGER.classList.remove('-stop')
-    $TRIGGER.innerHTML = '開　始'
+    $ROULETTE_TRIGGER.classList.remove('-stop')
+    $ROULETTE_TRIGGER.innerHTML = '開　始'
   }
 
   /**
    * Triggers
    */
-  $TRIGGER.addEventListener('click', () => {
+  $ROULETTE_TRIGGER.addEventListener('click', () => {
     buttonEventSwither()
   })
+  $OPENING_LOGOTYPE.addEventListener(
+    'click',
+    () => {
+      openingAnimation()
+    },
+    {
+      once: true,
+    }
+  )
 
   window.addEventListener('keydown', event => {
     const KEYCODE = event.keyCode
@@ -263,19 +321,19 @@ const Roulette = () => {
       switch (KEYCODE) {
         // F7
         case 118:
-          $theme = document.getElementById('theme01')
+          $theme = document.querySelector('#theme01')
           $ROULETTE.classList.remove('-theme02', '-theme03')
           $ROULETTE.classList.add('-theme01')
           break
         // F8
         case 119:
-          $theme = document.getElementById('theme02')
+          $theme = document.querySelector('#theme02')
           $ROULETTE.classList.remove('-theme01', '-theme03')
           $ROULETTE.classList.add('-theme02')
           break
         // F9
         case 120:
-          $theme = document.getElementById('theme03')
+          $theme = document.querySelector('#theme03')
           $ROULETTE.classList.remove('-theme01', '-theme02')
           $ROULETTE.classList.add('-theme03')
           break
@@ -290,16 +348,11 @@ const Roulette = () => {
         break
       // F1
       case 112:
-        $ENDING.classList.add('-active')
-        playAudio({ source: AUDIO_ENDING, loop: true, volume: 1 })
+        endingAnimation()
         break
       // F2
       case 113:
-        playAudio({ source: AUDIO_NOISE, loop: true, volume: 0.1618 })
-        break
-      // F3
-      case 114:
-        INSTANCE_ADUIO.pause()
+        BGM_AUDIO.pause()
         break
       default:
         break

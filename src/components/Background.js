@@ -1,15 +1,15 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import Ganko from '../images/ganko.jpg'
+import BackgroundGanko from '../images/background.jpg'
 
 const Stage = styled.aside`
   width: 100vw;
   min-height: 100vh;
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
-  z-index: 0;
-  background: url(${Ganko}) no-repeat center center;
+  z-index: -1;
+  background: url(${BackgroundGanko}) no-repeat center center;
   background-size: cover;
 `
 

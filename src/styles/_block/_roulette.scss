@@ -1,109 +1,139 @@
 @charset "UTF-8";
 
-/* roulette
-   ========================================================================== */
-
 .roulette {
   transform: translateY(-100vh);
   position: relative;
-  z-index: 2;
+}
 
-  // Wrapper
-  &__wrapper {
-    position: relative;
-    padding: 3px;
-    background-color: #fff;
-    width: 83.82vw;
-    max-width: 1280px;
-    height: 38.2vh;
-    max-height: 480px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 13px solid $color-red;
-  }
+// Wrapper
+.roulette__wrapper {
+  position: relative;
+  padding: 3px;
+  background-color: #fff;
+  width: 480px;
+  max-width: 1280px;
+  height: 61.8vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 13px solid $color-red;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+}
 
-  // Heading
-  &__heading {
-    background-color: #fff;
-    display: inline-block;
+// Heading
+.roulette__heading {
+  background-color: #fff;
+  display: inline-block;
+  color: $color-red;
+  padding: 0 1.618em;
+  font-size: 14px;
+  position: absolute;
+  transform: translateY(-50%);
+  @at-root .-theme01 & {
     color: $color-red;
-    padding: 0 1.618em;
-    font-size: 14px;
-    position: absolute;
-    transform: translateY(-50%);
-    @at-root .-theme01 & {
-      color: $color-red;
-    }
-    @at-root .-theme02 & {
-      color: adjust-hue(lighten($color-red, 3.82), 15deg);
-    }
-    @at-root .-theme03 & {
-      color: adjust-hue(lighten($color-red, 3.82), -30deg);
-    }
   }
+  @at-root .-theme02 & {
+    color: adjust-hue(lighten($color-red, 3.82), 15deg);
+  }
+  @at-root .-theme03 & {
+    color: adjust-hue(lighten($color-red, 3.82), -30deg);
+  }
+}
 
-  // Theme
-  &__theme {
-    font-size: 40px;
+// Theme
+.roulette__theme {
+  font-size: 40px;
+  line-height: 1.3;
+  border: 1px solid $color-red;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 24px;
+  .-small {
+    font-size: 0.618em;
     line-height: 1.3;
-    border: 1px solid $color-red;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    width: 100%;
-    padding: 24px;
-    .-small {
-      font-size: 0.618em;
-      line-height: 1.3;
-    }
-    @at-root .-theme01 & {
-      border-color: $color-red;
-    }
-    @at-root .-theme02 & {
-      border-color: adjust-hue(lighten($color-red, 3.82), 15deg);
-    }
-    @at-root .-theme03 & {
-      border-color: adjust-hue(lighten($color-red, 3.82), -30deg);
-    }
   }
+  @at-root .-theme01 & {
+    border-color: $color-red;
+  }
+  @at-root .-theme02 & {
+    border-color: adjust-hue(lighten($color-red, 3.82), 15deg);
+  }
+  @at-root .-theme03 & {
+    border-color: adjust-hue(lighten($color-red, 3.82), -30deg);
+  }
+}
 
-  // Placeholder
-  &__placeholder {
-    color: #ccc;
+// Placeholder
+.roulette__placeholder {
+  color: #ccc;
+  display: none;
+  &.-active {
+    display: block;
+  }
+}
+
+// List
+.roulette__list {
+  li {
     display: none;
     &.-active {
       display: block;
     }
   }
+}
 
-  // List
-  &__list {
-    li {
-      display: none;
-      &.-active {
-        display: block;
-      }
-    }
-  }
+// Shadow
+.roulette__shadow {
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  top: 0;
+  width: inherit;
+  max-width: inherit;
+  height: inherit;
+  max-height: inherit;
+  transform: scale(0.9) translateY(24px);
+  filter: blur(24px);
+  border-radius: inherit;
+  background-color: rgba(0, 0, 0, 0.382);
+}
 
-  // Shadow
-  &__shadow {
-    position: absolute;
-    z-index: -1;
-    left: 0;
-    top: 0;
-    width: inherit;
-    max-width: inherit;
-    height: inherit;
-    max-height: inherit;
-    transform: scale(0.9) translateY(24px);
-    filter: blur(24px);
-    border-radius: inherit;
-    background-color: rgba(0, 0, 0, 0.382);
+.roulette__trigger {
+  content: '開始';
+  display: block;
+  color: #fff;
+  background-color: $color-red;
+  border-radius: 5em;
+  width: 16.18%;
+  min-width: 400px;
+  padding: 1.1618em;
+  line-height: 1;
+  font-size: 19px;
+  position: fixed;
+  bottom: 5vh;
+  transition: background-color 0.21s ease 0s;
+  font-family: a-otf-midashi-mi-ma31-pr6n, serif;
+  font-style: normal;
+  font-weight: 600;
+  &:hover,
+  &.-stop {
+    background-color: darken($color-red, 15);
   }
+}
+
+.roulette__blackIn {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: z(main, blackIn);
+  backdrop-filter: blur(3px) brightness(38.2%);
 }

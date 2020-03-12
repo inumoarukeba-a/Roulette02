@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react'
 
 import SEO from '../components/SEO'
-import Header from '../components/Header'
-import Ataru from '../components/Ataru'
 import Theme01 from '../components/Theme01'
 import Theme02 from '../components/Theme02'
-import Theme03 from '../components/Theme03'
 import Background from '../components/Background'
+import Opening from '../components/Opening'
 import Ending from '../components/Ending'
 
 import Roulette from '../scripts/Roulette'
@@ -21,25 +19,24 @@ const IndexPage = () => {
     <>
       <SEO />
       <div className="wrapper">
+        <Opening />
         <main className="main">
-          <Header />
-          <Ataru />
+          <aside className="roulette__blackIn"></aside>
           <section id="roulette" className="roulette">
             <div className="roulette__wrapper">
               <div className="roulette__theme">
-                <p id="placeholder" className="roulette__placeholder -active">
+                <p className="roulette__placeholder -active">
                   ここにトークテーマが表示されます。
                 </p>
                 <Theme01 />
                 <Theme02 />
-                <Theme03 />
               </div>
               <aside className="roulette__shadow"></aside>
             </div>
           </section>
-          <button id="trigger">開　始</button>
+          <button className="roulette__trigger">開　始</button>
+          <Background />
         </main>
-        <Background />
         <Ending />
       </div>
     </>
