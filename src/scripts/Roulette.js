@@ -163,6 +163,7 @@ const Roulette = () => {
       })
     }, 1300)
     const TIMELINE = gsap.timeline()
+    TIMELINE.timeScale(10)
     TIMELINE.add('first')
       .to($OPENING_LOGOTYPE, {
         duration: 5.5,
@@ -352,7 +353,7 @@ const Roulette = () => {
     // ダミーを削除
     let $DUMMY_ELEMENTS = document.querySelectorAll('.-dummy')
     for (let i = 0; i < DUMMY_LENGTH; i++) {
-      $DUMMY_ELEMENTS[0].remove()
+      $DUMMY_ELEMENTS[i].remove()
     }
     // 一度テーマをリセット（ダミーの関係上）
     $active_theme.classList.remove('-active')
