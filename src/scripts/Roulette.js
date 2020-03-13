@@ -432,6 +432,7 @@ const Roulette = () => {
     switch (KEYCODE) {
       // Space
       case 32:
+        event.preventDefault()
         buttonEventSwither()
         break
       // F9
