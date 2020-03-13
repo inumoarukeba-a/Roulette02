@@ -163,7 +163,6 @@ const Roulette = () => {
       })
     }, 1300)
     const TIMELINE = gsap.timeline()
-    TIMELINE.timeScale(10)
     TIMELINE.add('first')
       .to($OPENING_LOGOTYPE, {
         duration: 5.5,
@@ -201,16 +200,16 @@ const Roulette = () => {
         },
         'shout+=.3'
       )
-      .add('roulette')
-      .to(
-        '.opening',
-        {
-          duration: 0.5,
-          y: '-100%',
-          ease: 'power1.out',
-        },
-        'roulette+=3.4'
-      )
+  }
+
+  const enterAnimation = () => {
+    const TIMELINE = gsap.timeline()
+    TIMELINE.add('first')
+      .to('.opening', {
+        duration: 0.5,
+        y: '-100%',
+        ease: 'power1.out',
+      })
       .add('roulette2')
       .to(
         '.roulette__blackIn',
@@ -394,6 +393,10 @@ const Roulette = () => {
       case 49:
         // セーフティフラッグ
         safety_flag = true
+        break
+      // 2
+      case 50:
+        enterAnimation()
         break
       // Q
       case 81:
