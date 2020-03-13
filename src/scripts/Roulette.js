@@ -19,6 +19,8 @@ import STOP04 from '../audios/stop02_01.mp3'
 import STOP05 from '../audios/stop02_02.mp3'
 import STOP06 from '../audios/stop03_01.mp3'
 import STOP07 from '../audios/stop03_02.mp3'
+import START_EFFECT from '../audios/start_effect.mp3'
+import STOP_EFFECT from '../audios/stop_effect.mp3'
 
 const Roulette = () => {
   /**
@@ -52,6 +54,7 @@ const Roulette = () => {
   const START_LENGTH = START_ARRAY.length - 1
   const STOP_LENGTH = STOP_ARRAY.length - 1
   const RESPONSE_AUDIO = new Audio()
+  const EFFECT_ADUIO = new Audio()
   const BGM_AUDIO = new Audio()
 
   let $theme = document.querySelector('#theme01')
@@ -73,11 +76,19 @@ const Roulette = () => {
     if (roulette_flag === false) {
       start_number >= START_LENGTH ? (start_number = 0) : start_number++
       playAudio({
+        instance: EFFECT_ADUIO,
+        source: START_EFFECT,
+        loop: false,
+        volume: 1,
+        fadeIn: false,
+      })
+      playAudio({
         instance: RESPONSE_AUDIO,
         source: START_ARRAY[start_number],
         loop: false,
         volume: 1,
         fadeIn: false,
+        delay: 890,
       })
       startAnimation()
       startRoulette()
@@ -85,11 +96,19 @@ const Roulette = () => {
     } else {
       stop_number >= STOP_LENGTH ? (stop_number = 0) : stop_number++
       playAudio({
+        instance: EFFECT_ADUIO,
+        source: STOP_EFFECT,
+        loop: false,
+        volume: 1,
+        fadeIn: false,
+      })
+      playAudio({
         instance: RESPONSE_AUDIO,
         source: STOP_ARRAY[stop_number],
         loop: false,
         volume: 1,
         fadeIn: false,
+        delay: 890,
       })
       stopAnimation()
       stopRoulette()
@@ -107,11 +126,14 @@ const Roulette = () => {
     volume = 1,
     fadeIn = false,
     fadeInSpeed = 1300,
+    delay = 0,
   } = {}) => {
     instance.currentTime = 0
     instance.src = source
     instance.loop = loop
-    instance.play()
+    setTimeout(() => {
+      instance.play()
+    }, delay)
     if (!fadeIn) {
       instance.volume = volume
     } else {
@@ -141,18 +163,21 @@ const Roulette = () => {
       })
     }, 1300)
     const TIMELINE = gsap.timeline()
-    TIMELINE.timeScale(5)
     TIMELINE.add('first')
       .to($OPENING_LOGOTYPE, {
         duration: 5.5,
         rotationY: 180 * 7,
         ease: 'back.out(1.1618)',
       })
-      .to('.opening__message--image', {
-        duration: 0.8,
-        opacity: 1,
-        ease: 'power1.out',
-      })
+      .to(
+        '.opening__message--image',
+        {
+          duration: 0.8,
+          opacity: 1,
+          ease: 'power1.out',
+        },
+        '+=3.4'
+      )
       .add('shout')
       .to(
         '.opening__shout--image',
