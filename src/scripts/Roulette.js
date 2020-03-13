@@ -394,8 +394,14 @@ const Roulette = () => {
         // セーフティフラッグ
         safety_flag = true
         break
+      default:
+        break
+    }
+    if (safety_flag === false) return
+    switch (KEYCODE) {
       // 2
       case 50:
+        // 入店
         enterAnimation()
         break
       // Q
@@ -422,7 +428,7 @@ const Roulette = () => {
       default:
         break
     }
-    if (roulette_flag === false && safety_flag === false) return
+    if (roulette_flag === false) return
     switch (KEYCODE) {
       // Space
       case 32:
