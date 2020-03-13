@@ -29,14 +29,26 @@
 .ending__message {
   color: #fff;
   position: absolute;
-  right: 150px;
-  top: 220px;
-  font-size: 30px;
-  line-height: 1.8;
+  right: 64px;
+  top: 168px;
+  font-size: 42px;
+  line-height: 1;
   letter-spacing: 0.05em;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 .ending__text {
   opacity: 0;
   transform: translateY(8px);
-  text-shadow: 0 0 2px rgba(#1a1a1a, 0.618);
+  background-color: #fff;
+  color: #1a1a1a;
+  filter: sepia(0.382);
+  padding: 0.382em 0.382em;
+  font-family: a-otf-ryumin-pr6n, serif;
+  font-weight: 300;
+  font-style: normal;
+  & + & {
+    margin-top: 8px;
+  }
 }

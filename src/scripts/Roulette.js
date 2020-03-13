@@ -169,6 +169,7 @@ const Roulette = () => {
         rotationY: 180 * 7,
         ease: 'back.out(1.1618)',
       })
+      .add('second')
       .to(
         '.opening__message--image',
         {
@@ -176,7 +177,7 @@ const Roulette = () => {
           opacity: 1,
           ease: 'power1.out',
         },
-        '+=3.4'
+        'second-=.5'
       )
       .add('shout')
       .to(
@@ -207,7 +208,7 @@ const Roulette = () => {
           y: '-100%',
           ease: 'power1.out',
         },
-        'roulette+=1.3'
+        'roulette+=3.4'
       )
       .add('roulette2')
       .to(
@@ -228,6 +229,12 @@ const Roulette = () => {
         },
         'roulette2+=2.1'
       )
+      .to($ROULETTE_TRIGGER, {
+        duration: 0.5,
+        y: 0,
+        opacity: 1,
+        ease: 'power1.out',
+      })
   }
 
   const startAnimation = () => {
@@ -295,13 +302,13 @@ const Roulette = () => {
       .to(
         '.ending__text',
         {
-          duration: 2.1,
+          duration: 3.4,
           opacity: 1,
           y: 0,
-          stagger: 1.7,
+          stagger: 2.1,
           ease: 'power1.easeout',
         },
-        '+=.8'
+        '+=2.1'
       )
   }
 
@@ -359,12 +366,12 @@ const Roulette = () => {
    * Button
    */
   const startButton = () => {
-    $ROULETTE_TRIGGER.innerHTML = '決　定'
+    $ROULETTE_TRIGGER.innerHTML = '注文する'
     $ROULETTE_TRIGGER.classList.add('-stop')
   }
   const stopButton = () => {
     $ROULETTE_TRIGGER.classList.remove('-stop')
-    $ROULETTE_TRIGGER.innerHTML = '開　始'
+    $ROULETTE_TRIGGER.innerHTML = '大将を呼ぶ'
   }
 
   /**
@@ -404,9 +411,9 @@ const Roulette = () => {
       // E
       case 69:
         // トークテーマ03
-        $theme = document.querySelector('#theme03')
-        $ROULETTE.classList.remove('-theme01', '-theme02')
-        $ROULETTE.classList.add('-theme03')
+        // $theme = document.querySelector('#theme03')
+        // $ROULETTE.classList.remove('-theme01', '-theme02')
+        // $ROULETTE.classList.add('-theme03')
         break
       default:
         break

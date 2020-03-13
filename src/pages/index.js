@@ -34,7 +34,7 @@ const IndexPage = () => {
               <aside className="roulette__shadow"></aside>
             </div>
           </section>
-          <button className="roulette__trigger">開　始</button>
+          <button className="roulette__trigger">寄っていく</button>
           <Background />
         </main>
         <Ending />

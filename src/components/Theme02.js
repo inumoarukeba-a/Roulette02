@@ -5,11 +5,22 @@ const Theme01 = () => {
     <>
       <ul id="theme02" className="roulette__list">
         <li>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Exercitationem aspernatur pariatur ea. Dolore rerum sapiente natus
-          odit numquam voluptate? Quisquam natus error amet harum, at maiores
-          cumque autem voluptates id!
+          過去にノイ登山部で山登りをされたときに朝早いにもかかわらずクッキーを作ってきた！…という女子力の高さで有名ですが得意なお菓子作りは何ですか？
         </li>
+        <li>これまでの人生で一番の「ヤンチャ」エピソードを教えてください。</li>
+        <li>
+          内田さんの欠点が見当たらないので、自分で思う欠点を教えてください。
+          <br />
+          <span className="-small">
+            （牡蠣にあたる、運という回答はなしでお願いします！）
+          </span>
+        </li>
+        <li>内田さんは、ノイがどんな環境だったら辞めずにいられましたか？</li>
+        <li>一番やり切った、凝った案件って何ですか？</li>
+        <li>プールでどんな風に運動してました？</li>
+        <li>結局痩せました？</li>
+        <li>逆に何か聞きたいことは？</li>
+        <li>今日のこの催しは何点ですか？</li>
       </ul>
     </>
   )

@@ -106,7 +106,8 @@
 }
 
 .roulette__trigger {
-  content: '開始';
+  opacity: 0;
+  transform: translateY(15vh);
   display: block;
   color: #fff;
   background-color: $color-red;
@@ -122,6 +123,7 @@
   font-family: a-otf-midashi-mi-ma31-pr6n, serif;
   font-style: normal;
   font-weight: 600;
+  letter-spacing: 0.382em;
   &:hover,
   &.-stop {
     background-color: darken($color-red, 15);
