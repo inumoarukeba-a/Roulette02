@@ -425,11 +425,6 @@ const Roulette = () => {
         // $ROULETTE.classList.remove('-theme01', '-theme02')
         // $ROULETTE.classList.add('-theme03')
         break
-      default:
-        break
-    }
-    if (roulette_flag === false) return
-    switch (KEYCODE) {
       // Space
       case 32:
         event.preventDefault()
