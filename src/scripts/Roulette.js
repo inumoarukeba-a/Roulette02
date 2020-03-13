@@ -1,10 +1,24 @@
 // import _ from 'lodash'
 import gsap from 'gsap'
 
-import AUDIO_DRUM_REPEAT from '../audios/drum-repeat.mp3'
-import AUDIO_DRUM_NED from '../audios/drum-end.mp3'
+// import AUDIO_DRUM_REPEAT from '../audios/drum-repeat.mp3'
+// import AUDIO_DRUM_END from '../audios/drum-end.mp3'
 import AUDIO_ENDING from '../audios/ending.mp3'
 import AUDIO_NOISE from '../audios/noise.mp3'
+import START01 from '../audios/start01_01.mp3'
+import START02 from '../audios/start01_02.mp3'
+import START03 from '../audios/start01_03.mp3'
+import START04 from '../audios/start02_01.mp3'
+import START05 from '../audios/start02_02.mp3'
+import START06 from '../audios/start03_01.mp3'
+import START07 from '../audios/start03_02.mp3'
+import STOP01 from '../audios/stop01_01.mp3'
+import STOP02 from '../audios/stop01_02.mp3'
+import STOP03 from '../audios/stop01_03.mp3'
+import STOP04 from '../audios/stop02_01.mp3'
+import STOP05 from '../audios/stop02_02.mp3'
+import STOP06 from '../audios/stop03_01.mp3'
+import STOP07 from '../audios/stop03_02.mp3'
 
 const Roulette = () => {
   /**
@@ -24,6 +38,19 @@ const Roulette = () => {
     '今後やってみたいプログラムはありますか？',
   ]
   const DUMMY_LENGTH = DUMMY.length
+
+  const START_ARRAY = [
+    START01,
+    START02,
+    START03,
+    START04,
+    START05,
+    START06,
+    START07,
+  ]
+  const STOP_ARRAY = [STOP01, STOP02, STOP03, STOP04, STOP05, STOP06, STOP07]
+  const START_LENGTH = START_ARRAY.length - 1
+  const STOP_LENGTH = STOP_ARRAY.length - 1
   const RESPONSE_AUDIO = new Audio()
   const BGM_AUDIO = new Audio()
 
@@ -31,6 +58,9 @@ const Roulette = () => {
   let interval = -1
   let roulette_flag = false
   let first_flag = false
+  let safety_flag = false
+  let start_number = -1
+  let stop_number = -1
   let roulette_length
   let random
   let $active_theme
@@ -41,10 +71,11 @@ const Roulette = () => {
   const buttonEventSwither = () => {
     $PLACEHOLDER.classList.remove('-active')
     if (roulette_flag === false) {
+      start_number >= START_LENGTH ? (start_number = 0) : start_number++
       playAudio({
         instance: RESPONSE_AUDIO,
-        source: AUDIO_DRUM_REPEAT,
-        loop: true,
+        source: START_ARRAY[start_number],
+        loop: false,
         volume: 1,
         fadeIn: false,
       })
@@ -52,9 +83,10 @@ const Roulette = () => {
       startRoulette()
       startButton()
     } else {
+      stop_number >= STOP_LENGTH ? (stop_number = 0) : stop_number++
       playAudio({
         instance: RESPONSE_AUDIO,
-        source: AUDIO_DRUM_NED,
+        source: STOP_ARRAY[stop_number],
         loop: false,
         volume: 1,
         fadeIn: false,
@@ -109,6 +141,7 @@ const Roulette = () => {
       })
     }, 1300)
     const TIMELINE = gsap.timeline()
+    TIMELINE.timeScale(5)
     TIMELINE.add('first')
       .to($OPENING_LOGOTYPE, {
         duration: 5.5,
@@ -151,6 +184,7 @@ const Roulette = () => {
         },
         'roulette+=1.3'
       )
+      .add('roulette2')
       .to(
         '.roulette__blackIn',
         {
@@ -158,7 +192,16 @@ const Roulette = () => {
           autoAlpha: 0,
           ease: 'power1.out',
         },
-        '-=.5'
+        'roulette2-=.5'
+      )
+      .to(
+        '.roulette__background',
+        {
+          duration: 0.8,
+          scale: 1.382,
+          ease: 'power1.out',
+        },
+        'roulette2+=2.1'
       )
   }
 
@@ -303,55 +346,58 @@ const Roulette = () => {
    * Triggers
    */
   $ROULETTE_TRIGGER.addEventListener('click', () => {
+    if (safety_flag === false) return
     buttonEventSwither()
   })
-  $OPENING_LOGOTYPE.addEventListener(
-    'click',
-    () => {
-      openingAnimation()
-    },
-    {
-      once: true,
-    }
-  )
+  $OPENING_LOGOTYPE.addEventListener('click', () => {
+    if (safety_flag === false) return
+    openingAnimation()
+  })
 
   window.addEventListener('keydown', event => {
     const KEYCODE = event.keyCode
-    if (roulette_flag === false) {
-      switch (KEYCODE) {
-        // F7
-        case 118:
-          $theme = document.querySelector('#theme01')
-          $ROULETTE.classList.remove('-theme02', '-theme03')
-          $ROULETTE.classList.add('-theme01')
-          break
-        // F8
-        case 119:
-          $theme = document.querySelector('#theme02')
-          $ROULETTE.classList.remove('-theme01', '-theme03')
-          $ROULETTE.classList.add('-theme02')
-          break
-        // F9
-        case 120:
-          $theme = document.querySelector('#theme03')
-          $ROULETTE.classList.remove('-theme01', '-theme02')
-          $ROULETTE.classList.add('-theme03')
-          break
-        default:
-          break
-      }
+    switch (KEYCODE) {
+      // 1
+      case 49:
+        // セーフティフラッグ
+        safety_flag = true
+        break
+      // Q
+      case 81:
+        // トークテーマ01
+        $theme = document.querySelector('#theme01')
+        $ROULETTE.classList.remove('-theme02', '-theme03')
+        $ROULETTE.classList.add('-theme01')
+        break
+      // W
+      case 87:
+        // トークテーマ02
+        $theme = document.querySelector('#theme02')
+        $ROULETTE.classList.remove('-theme01', '-theme03')
+        $ROULETTE.classList.add('-theme02')
+        break
+      // E
+      case 69:
+        // トークテーマ03
+        $theme = document.querySelector('#theme03')
+        $ROULETTE.classList.remove('-theme01', '-theme02')
+        $ROULETTE.classList.add('-theme03')
+        break
+      default:
+        break
     }
+    if (roulette_flag === false && safety_flag === false) return
     switch (KEYCODE) {
       // Space
       case 32:
         buttonEventSwither()
         break
-      // F1
-      case 112:
+      // F9
+      case 120:
         endingAnimation()
         break
-      // F2
-      case 113:
+      // F8
+      case 119:
         BGM_AUDIO.pause()
         break
       default:

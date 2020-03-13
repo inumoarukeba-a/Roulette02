@@ -5,22 +5,10 @@ const Theme01 = () => {
     <>
       <ul id="theme02" className="roulette__list">
         <li>
-          これまでの案件で、
-          <br />
-          もっとも印象深いものはなんですか？
-          <br />
-          その理由をエピソードを交えて教えてください。
-        </li>
-        <li>今だから話せる失敗談を教えてください。</li>
-        <li>今後やってみたい案件・プロジェクトはありますか？</li>
-        <li>
-          ディレクションする際に
-          <br />
-          心がけていることはなんですか？
-          <br />
-          <span className="-small">
-            （クライアント／チームメンバー／ユーザーなどに対して）
-          </span>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Exercitationem aspernatur pariatur ea. Dolore rerum sapiente natus
+          odit numquam voluptate? Quisquam natus error amet harum, at maiores
+          cumque autem voluptates id!
         </li>
       </ul>
     </>

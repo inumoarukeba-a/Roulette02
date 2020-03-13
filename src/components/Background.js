@@ -16,7 +16,7 @@ const Stage = styled.aside`
 const Background = () => {
   return (
     <>
-      <Stage />
+      <Stage className="roulette__background" />
     </>
   )
 }
